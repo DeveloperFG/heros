@@ -14,6 +14,13 @@ server.use(cors())
 
 
 
+// Rota principal
+server.get('/', (req, res) => {
+  res.send('Bem-vindo à API!');
+  // return res.json(usuarios);
+});
+
+
 //exemplo 2 lista todos os herois
 server.get(('/lista'), async (req, res)=>{
 
