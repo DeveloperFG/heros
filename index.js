@@ -1,28 +1,28 @@
-import cors from 'cors'
+
 import express from 'express'
+import cors from 'cors'
+
 import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-const server = express();
+const app = express();
+const PORT = 3000;
 
-
-server.use(express.json())
-
-server.use(cors())
-
-
+// Middleware
+app.use(express.json())
+app.use(cors());
 
 
 // Rota principal
-server.get('/', (req, res) => {
+app.get('/', (req, res) => {
   res.send('Bem-vindo à API!');
   // return res.json(usuarios);
 });
 
 
 //exemplo 2 lista todos os herois
-server.get(('/lista'), async (req, res)=>{
+app.get(('/lista'), async (req, res)=>{
 
   const hero = await prisma.heros.findMany()
 
@@ -32,7 +32,7 @@ server.get(('/lista'), async (req, res)=>{
 
 
 //exemplo 1 criar novo heroi
-server.post('/lista', async (req, res)=>{
+app.post('/lista', async (req, res)=>{
 
   await prisma.heros.create({
       data: {
@@ -51,7 +51,7 @@ server.post('/lista', async (req, res)=>{
 
 
 //exemplo 5 listar 1 heroi
-server.get('/lista/:index',(req, res)=>{
+app.get('/lista/:index',(req, res)=>{
     const {index} = req.params;
 
     return res.json(heros[index])
@@ -60,7 +60,7 @@ server.get('/lista/:index',(req, res)=>{
 
 
 //exemplo 3 editar heroi
-server.put('/lista/:id', async (req, res)=>{
+app.put('/lista/:id', async (req, res)=>{
 
   await prisma.heros.update({
     where:{
@@ -80,7 +80,7 @@ server.put('/lista/:id', async (req, res)=>{
 })
 
 //exemplo 8 deletar um heroi
-server.delete('/lista/:id', async (req, res)=>{
+app.delete('/lista/:id', async (req, res)=>{
     await prisma.heros.delete({
       where: {
         id : req.params.id
@@ -93,4 +93,7 @@ server.delete('/lista/:id', async (req, res)=>{
 })
 
 
-server.listen(3000);
+// Inicia o servidor
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
+});
