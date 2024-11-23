@@ -1,5 +1,5 @@
 import cors from 'cors'
-import express, { json } from 'express'
+import express from 'express'
 import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
@@ -12,13 +12,6 @@ const server = express();
 server.use(express.json())
 
 server.use(cors())
-
-// const heros = []
-
-
-// Query params = ?nome=NodeJS
-// Route Params = /curso/2
-// Request Body = { nome: 'Nodejs', tipo: 'Backend' }
 
 
 // exempo de middleware global
@@ -51,17 +44,6 @@ server.use((req, res, next)=>{
   return next()
  }
 
-
-//  // buscar por id
-//  function buscarHerosPorId(id){
-//   return heros.filter( heros => heros.id == id)
-//  }
-
-//   // buscar por index heros
-//   function buscarHerosPorId(id){
-//     return heros.findIndex( heros => heros.id == id)
-//    }
-  
 
 //exemplo 1 criar novo heroi
 server.post('/lista', async (req, res)=>{
@@ -97,16 +79,6 @@ server.get('/lista/:index',(req, res)=>{
 
     return res.json(heros[index])
 })
-
-
-
-//selecionar por id
-// server.get('/lista/:index', (req, res)=>{
-//   // const { index } = req.params;
-
-//   res.json(buscarHerosPorId(req.params.index))
-
-// })
 
 
 
